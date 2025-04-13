@@ -26,13 +26,15 @@ java {
     withSourcesJar()
 }
 
+runPaper.folia.registerTask()
+
 tasks {
     runServer {
         dependsOn("bundledJar")
 
-        minecraftVersion("1.20.6")
+        minecraftVersion("1.20.4")
 
-        // Set Java 21 (1.20.6 requires Java 21)
+        // Set Java 21 (1.20.4 requires Java 21)
         javaLauncher = project.javaToolchains.launcherFor {
             languageVersion = JavaLanguageVersion.of(21)
         }
