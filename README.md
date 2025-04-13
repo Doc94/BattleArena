@@ -65,3 +65,6 @@ BattleArena has multiple event triggers implemented by default used in the confi
 In order to add your own, ensure your `Event` class implements the `ArenaEvent` or `ArenaPlayerEvent` class. The difference between the two is that `ArenaPlayerEvent` will only capture a single player, which is the player in the event (see `on-join` as an example), while `ArenaEvent` will be fired for all players in a competition (see `on-complete` as an example).
 
 Once you have added the `@EventTrigger` annotation, then run `ArenaEventType.create(<name>, <event class>)` which will create the event type and allow it to be used in the config. Then, in order to trigger this, call your event through the `ArenaEventManager` visible in your `Arena` class.
+
+### Folia
+- Scoreboards not work in folia then modules using this can not be loaded
