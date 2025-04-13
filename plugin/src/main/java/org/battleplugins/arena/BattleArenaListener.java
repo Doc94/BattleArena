@@ -67,7 +67,7 @@ class BattleArenaListener implements Listener {
             }
 
             // Teleport the player to their last location
-            event.getPlayer().teleport(lastLocation);
+            event.getPlayer().teleportAsync(lastLocation);
         }
     }
 }

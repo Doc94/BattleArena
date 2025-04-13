@@ -30,7 +30,7 @@ public class PlayerStorage {
     public static final NamespacedKey LAST_LOCATION_KEY = new NamespacedKey(BattleArena.getInstance(), "last_location");
 
     private final ArenaPlayer player;
-    
+
     private ItemStack[] inventory;
     private GameMode gameMode;
     private final Map<Attribute, Double> attributes = new HashMap<>();
@@ -49,13 +49,13 @@ public class PlayerStorage {
     private boolean allowFlight;
 
     private final Collection<PotionEffect> effects = new ArrayList<>();
-    
+
     private Location lastLocation;
 
     private final BitSet stored = new BitSet();
 
     private boolean disconnected;
-    
+
     public PlayerStorage(ArenaPlayer player) {
         this.player = player;
     }
@@ -165,7 +165,7 @@ public class PlayerStorage {
             type.restore(this);
             this.stored.clear(type.ordinal());
         }
-        
+
         // Reset everything we have in this class
         if (toRestore.contains(Type.INVENTORY)) this.inventory = null;
         if (toRestore.contains(Type.ATTRIBUTES)) this.attributes.clear();
@@ -237,7 +237,7 @@ public class PlayerStorage {
             this.player.getPlayer().addPotionEffect(effect);
         }
     }
-    
+
     private void restoreLocation() {
         if (this.disconnected) {
             // Store last location if the player was disconnected
@@ -247,7 +247,7 @@ public class PlayerStorage {
             // intelligent in the future
         }
 
-        this.player.getPlayer().teleport(this.lastLocation);
+        this.player.getPlayer().teleportAsync(this.lastLocation);
     }
 
     /**
@@ -269,7 +269,7 @@ public class PlayerStorage {
         if (all || toStore.contains(Type.GAMEMODE)) {
             this.player.getPlayer().setGameMode(GameMode.SURVIVAL);
         }
-        
+
         if (all || toStore.contains(Type.ATTRIBUTES)) {
             for (Attribute attribute : this.attributes.keySet()) {
                 this.player.getPlayer().getAttribute(attribute).setBaseValue(this.player.getPlayer().getAttribute(attribute).getDefaultValue());
@@ -284,7 +284,7 @@ public class PlayerStorage {
             this.player.getPlayer().setHealth(this.player.getPlayer().getAttribute(Attribute.GENERIC_MAX_HEALTH).getDefaultValue());
             this.player.getPlayer().setFoodLevel(20);
         }
-        
+
         if (all || toStore.contains(Type.EXPERIENCE)) {
             this.player.getPlayer().setTotalExperience(0);
             this.player.getPlayer().setExp(0);
@@ -295,7 +295,7 @@ public class PlayerStorage {
             this.player.getPlayer().setAllowFlight(false);
             this.player.getPlayer().setFlying(false);
         }
-        
+
         if (all || toStore.contains(Type.EFFECTS)) {
             for (PotionEffect effect : this.effects) {
                 this.player.getPlayer().removePotionEffect(effect.getType());
@@ -320,19 +320,19 @@ public class PlayerStorage {
         FLIGHT(PlayerStorage::storeFlight, PlayerStorage::restoreFlight),
         EFFECTS(PlayerStorage::storeEffects, PlayerStorage::restoreEffects),
         LOCATION(PlayerStorage::storeLocation, PlayerStorage::restoreLocation);
-        
+
         private final Consumer<PlayerStorage> storeFunction;
         private final Consumer<PlayerStorage> restoreFunction;
-        
+
         Type(Consumer<PlayerStorage> storeFunction, Consumer<PlayerStorage> restoreFunction) {
             this.storeFunction = storeFunction;
             this.restoreFunction = restoreFunction;
         }
-        
+
         public void store(PlayerStorage storage) {
             this.storeFunction.accept(storage);
         }
-        
+
         public void restore(PlayerStorage storage) {
             this.restoreFunction.accept(storage);
         }
