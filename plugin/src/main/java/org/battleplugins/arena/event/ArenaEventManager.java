@@ -158,7 +158,7 @@ public class ArenaEventManager {
         while (iterator.hasNext()) {
             EventAction action = iterator.next();
             if (!Bukkit.isStopping() && action instanceof DelayAction delayAction) {
-                Bukkit.getScheduler().runTaskLater(BattleArena.getInstance(), () -> this.pollActions(event, competition, iterator, players), delayAction.getTicks());
+                Bukkit.getServer().getGlobalRegionScheduler().runDelayed(BattleArena.getInstance(), scheduledTask -> this.pollActions(event, competition, iterator, players), delayAction.getTicks());
                 return;
             }
 

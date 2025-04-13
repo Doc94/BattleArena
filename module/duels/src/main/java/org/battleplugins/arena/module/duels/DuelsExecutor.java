@@ -84,11 +84,11 @@ public class DuelsExecutor implements SubCommandExecutor {
 
         this.module.removeDuelRequest(target.getUniqueId());
 
-        Bukkit.getScheduler().runTaskLater(BattleArena.getInstance(), () -> {
+        Bukkit.getServer().getGlobalRegionScheduler().runDelayed(BattleArena.getInstance(), scheduledTask -> {
             this.module.acceptDuel(this.arena, player, target);
         }, 100);
     }
-    
+
     @ArenaCommand(commands = "duel", subCommands = "deny", description = "Deny a duel request.", permissionNode = "duel.deny")
     public void denyDuel(Player player, Player target) {
         UUID requestedId = this.module.getDuelRequests().get(target.getUniqueId());
@@ -104,10 +104,10 @@ public class DuelsExecutor implements SubCommandExecutor {
 
         DuelsMessages.DUEL_REQUEST_DENIED.send(player, target.getName());
         DuelsMessages.DENIED_DUEL_REQUEST.send(target, player.getName());
-        
+
         this.module.removeDuelRequest(target.getUniqueId());
     }
-    
+
     @ArenaCommand(commands = "duel", subCommands = "cancel", description = "Cancel a duel request.", permissionNode = "duel.cancel")
     public void cancelDuel(Player player) {
         if (!this.module.getDuelRequests().containsKey(player.getUniqueId())) {
@@ -120,11 +120,11 @@ public class DuelsExecutor implements SubCommandExecutor {
         if (target == null) {
             // Shouldn't get here but just incase
             this.module.removeDuelRequest(player.getUniqueId());
-            
+
             DuelsMessages.NO_DUEL_REQUESTS.send(player);
             return;
         }
-        
+
         DuelsMessages.DUEL_REQUEST_CANCELLED.send(player, target.getName());
         DuelsMessages.CANCELLED_DUEL_REQUEST.send(target, player.getName());
 

@@ -95,7 +95,7 @@ public class TournamentListener implements ArenaListener {
         // at the end of the victory phase too.
         if (CompetitionPhaseType.VICTORY.equals(event.getPhase().getType())) {
             // Post until next tick to ensure all players are marked as complete
-            Bukkit.getServer().getScheduler().runTask(this.tournament.getArena().getPlugin(), () -> {
+            Bukkit.getServer().getGlobalRegionScheduler().run(this.tournament.getArena().getPlugin(), scheduledTask -> {
                 if (this.tournament.canAdvance()) {
                     this.tournament.onAdvance(this.tournament.getWinningContestants());
                 }

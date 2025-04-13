@@ -44,16 +44,6 @@ public class CountdownPhase<T extends LiveCompetition<T>> extends LiveCompetitio
             this.onCountdown();
             this.countdown--;
         }, 0L, 20L);
-        /*
-        this.countdownTask = Bukkit.getScheduler().runTaskTimer(this.competition.getArena().getPlugin(), () -> {
-            if (this.countdown == 0) {
-                this.advanceToNextPhase();
-                return;
-            }
-
-            this.onCountdown();
-            this.countdown--;
-        }, 0L, 20L);*/
     }
 
     @ArenaEventHandler

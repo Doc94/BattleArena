@@ -153,7 +153,9 @@ public class TeamColors implements ArenaModuleInitializer {
     }
 
     private void post(int ticks, Runnable runnable) {
-        Bukkit.getScheduler().runTaskLater(BattleArena.getInstance(), runnable, ticks);
+        Bukkit.getServer().getGlobalRegionScheduler().runDelayed(BattleArena.getInstance(), scheduledTask -> {
+            runnable.run();
+        }, ticks);
     }
 
     private static boolean showTeamPrefixes(LiveCompetition<?> competition, ArenaTeam team) {

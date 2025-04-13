@@ -206,7 +206,7 @@ public class Tournament {
             this.advance(contestants);
         } else {
             long ticks = advanceTime.toMillis() / 50;
-            Bukkit.getServer().getScheduler().runTaskLater(this.arena.getPlugin(), () -> {
+            Bukkit.getServer().getGlobalRegionScheduler().runDelayed(this.arena.getPlugin(), scheduledTask -> {
                 this.advance(contestants);
             }, ticks);
 
@@ -500,7 +500,7 @@ public class Tournament {
 
         return contestants;
     }
-    
+
     enum State {
         WAITING,
         STARTING,

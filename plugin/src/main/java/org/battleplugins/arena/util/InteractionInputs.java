@@ -66,7 +66,7 @@ public class InteractionInputs {
                     }
 
                     // Run task synchronously since chat is async
-                    Bukkit.getScheduler().runTask(BattleArena.getInstance(), () -> {
+                    Bukkit.getServer().getGlobalRegionScheduler().run(BattleArena.getInstance(), scheduledTask -> {
                         onChatInput(message);
                     });
 
@@ -129,7 +129,7 @@ public class InteractionInputs {
                     ItemStack currentItem = event.getCurrentItem().clone();
 
                     // Need to run a tick later so Bukkit can handle the event cancellation
-                    Bukkit.getScheduler().runTaskLater(BattleArena.getInstance(), () -> {
+                    Bukkit.getServer().getGlobalRegionScheduler().runDelayed(BattleArena.getInstance(), scheduledTask -> {
                         onInventoryInteract(currentItem);
                     }, 1);
 
@@ -190,7 +190,7 @@ public class InteractionInputs {
                     LAST_INPUT.put(player.getUniqueId(), System.currentTimeMillis());
 
                     // Need to run a tick later so Bukkit can handle the event cancellation
-                    Bukkit.getScheduler().runTaskLater(BattleArena.getInstance(), () -> {
+                    Bukkit.getServer().getGlobalRegionScheduler().runDelayed(BattleArena.getInstance(), scheduledTask -> {
                         onPositionInteract(event.getClickedBlock().getLocation());
                     }, 1);
 
