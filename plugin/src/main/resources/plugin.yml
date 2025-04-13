@@ -5,6 +5,7 @@ description: A complete match and event framework for Minecraft. Supports creati
 author: BattlePlugins
 website: https://battleplugins.org
 api-version: 1.19
+folia-supported: true
 softdepend: [WorldEdit]
 commands:
   battlearena:
