@@ -1,5 +1,6 @@
 package org.battleplugins.arena.competition.phase.phases;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.battleplugins.arena.ArenaPlayer;
 import org.battleplugins.arena.competition.LiveCompetition;
 import org.battleplugins.arena.competition.phase.LiveCompetitionPhase;
@@ -30,12 +31,12 @@ public class CountdownPhase<T extends LiveCompetition<T>> extends LiveCompetitio
     private String sound;
 
     private long countdown;
-    private BukkitTask countdownTask;
+    private ScheduledTask countdownTask;
 
     @Override
     public void onStart() {
         this.countdown = this.countdownTime.toSeconds();
-        this.countdownTask = Bukkit.getScheduler().runTaskTimer(this.competition.getArena().getPlugin(), () -> {
+        Bukkit.getServer().getGlobalRegionScheduler().runAtFixedRate(this.competition.getArena().getPlugin(), scheduledTask -> {
             if (this.countdown == 0) {
                 this.advanceToNextPhase();
                 return;
@@ -44,6 +45,16 @@ public class CountdownPhase<T extends LiveCompetition<T>> extends LiveCompetitio
             this.onCountdown();
             this.countdown--;
         }, 0L, 20L);
+        /*
+        this.countdownTask = Bukkit.getScheduler().runTaskTimer(this.competition.getArena().getPlugin(), () -> {
+            if (this.countdown == 0) {
+                this.advanceToNextPhase();
+                return;
+            }
+
+            this.onCountdown();
+            this.countdown--;
+        }, 0L, 20L);*/
     }
 
     @ArenaEventHandler
