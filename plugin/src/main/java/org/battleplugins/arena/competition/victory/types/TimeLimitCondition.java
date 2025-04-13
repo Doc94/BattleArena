@@ -1,5 +1,6 @@
 package org.battleplugins.arena.competition.victory.types;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.battleplugins.arena.competition.LiveCompetition;
 import org.battleplugins.arena.competition.victory.VictoryCondition;
 import org.battleplugins.arena.config.ArenaOption;
@@ -7,7 +8,6 @@ import org.battleplugins.arena.resolver.Resolver;
 import org.battleplugins.arena.resolver.ResolverKeys;
 import org.battleplugins.arena.resolver.ResolverProvider;
 import org.battleplugins.arena.util.Util;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
 import java.util.Set;
@@ -18,7 +18,7 @@ public class TimeLimitCondition<T extends LiveCompetition<T>> extends VictoryCon
     private Duration timeLimit;
 
     private long startTime = -1;
-    private BukkitTask task;
+    private ScheduledTask task;
 
     @Override
     public void onStart() {
@@ -27,9 +27,7 @@ public class TimeLimitCondition<T extends LiveCompetition<T>> extends VictoryCon
         }
 
         this.startTime = System.currentTimeMillis();
-        this.task = this.competition.getArena().getPlugin().getServer().getScheduler().runTaskLater(this.competition.getArena().getPlugin(), () -> {
-            this.advanceToNextPhase(Set.of());
-        }, this.timeLimit.toMillis() / 50L);
+        this.task = this.competition.getArena().getPlugin().getServer().getGlobalRegionScheduler().runDelayed(this.competition.getArena().getPlugin(), scheduledTask -> this.advanceToNextPhase(Set.of()), this.timeLimit.toMillis() / 50L);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.battleplugins.arena.competition.event;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import net.kyori.adventure.text.Component;
 import org.battleplugins.arena.Arena;
 import org.battleplugins.arena.competition.Competition;
@@ -7,7 +8,6 @@ import org.battleplugins.arena.competition.CompetitionType;
 import org.battleplugins.arena.competition.map.LiveCompetitionMap;
 import org.battleplugins.arena.competition.map.MapType;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,11 +43,9 @@ public class EventScheduler {
             timeTilStart = options.getDelay().toMillis() / 50;
         }
 
-        BukkitTask bukkitTask = Bukkit.getScheduler().runTaskLater(arena.getPlugin(), () -> {
-            this.startEvent(arena, options);
-        }, timeTilStart);
+        ScheduledTask scheduledTask = Bukkit.getServer().getGlobalRegionScheduler().runDelayed(arena.getPlugin(), task -> this.startEvent(arena, options), timeTilStart);
 
-        this.scheduledEvents.put(arena, new ScheduledEvent(options, bukkitTask));
+        this.scheduledEvents.put(arena, new ScheduledEvent(options, scheduledTask));
     }
 
     /**
@@ -156,6 +154,6 @@ public class EventScheduler {
         return Set.copyOf(this.scheduledEvents.keySet());
     }
 
-    record ScheduledEvent(EventOptions options, BukkitTask task) {
+    record ScheduledEvent(EventOptions options, ScheduledTask task) {
     }
 }

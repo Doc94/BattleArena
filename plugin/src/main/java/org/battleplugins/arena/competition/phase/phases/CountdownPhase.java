@@ -14,7 +14,6 @@ import org.battleplugins.arena.resolver.ResolverProvider;
 import org.battleplugins.arena.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;

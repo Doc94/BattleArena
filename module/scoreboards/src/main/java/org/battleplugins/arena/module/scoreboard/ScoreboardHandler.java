@@ -1,5 +1,6 @@
 package org.battleplugins.arena.module.scoreboard;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.battleplugins.arena.ArenaPlayer;
@@ -8,7 +9,6 @@ import org.battleplugins.arena.module.scoreboard.line.ScoreboardLineCreator;
 import org.battleplugins.arena.util.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -26,7 +26,7 @@ public class ScoreboardHandler {
     private final ScoreboardTemplate template;
 
     private Scoreboard previousScoreboard;
-    private BukkitTask updateTask;
+    private ScheduledTask updateTask;
 
     private List<Component> lastLines = new ArrayList<>();
 
@@ -78,7 +78,7 @@ public class ScoreboardHandler {
         }
 
         this.lastLines = lines;
-        this.updateTask = Bukkit.getScheduler().runTaskTimer(BattleArena.getInstance(), this::updateScoreboard, 0, this.template.getRefreshTime().toMillis() / 50);
+        this.updateTask = Bukkit.getServer().getGlobalRegionScheduler().runAtFixedRate(BattleArena.getInstance(), scheduledTask -> this.updateScoreboard(), 0, this.template.getRefreshTime().toMillis() / 50);
         return scoreboard;
     }
 

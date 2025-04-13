@@ -1,5 +1,6 @@
 package org.battleplugins.arena.competition.phase.phases;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.battleplugins.arena.ArenaPlayer;
 import org.battleplugins.arena.competition.LiveCompetition;
 import org.battleplugins.arena.competition.phase.LiveCompetitionPhase;
@@ -8,7 +9,6 @@ import org.battleplugins.arena.event.arena.ArenaDrawEvent;
 import org.battleplugins.arena.event.arena.ArenaLoseEvent;
 import org.battleplugins.arena.event.arena.ArenaVictoryEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.time.Duration;
 import java.util.HashSet;
@@ -18,7 +18,7 @@ public class VictoryPhase<T extends LiveCompetition<T>> extends LiveCompetitionP
     @ArenaOption(name = "duration", description = "The number of seconds to remain in the victory condition.", required = true)
     private Duration duration;
 
-    private BukkitTask durationTask;
+    private ScheduledTask durationTask;
 
     @Override
     public void onStart() {
@@ -29,9 +29,9 @@ public class VictoryPhase<T extends LiveCompetition<T>> extends LiveCompetitionP
             return;
         }
 
-        this.durationTask = Bukkit.getScheduler().runTaskLater(
+        this.durationTask = Bukkit.getServer().getGlobalRegionScheduler().runDelayed(
                 this.competition.getArena().getPlugin(),
-                this::advanceToNextPhase,
+                scheduledTask -> this.advanceToNextPhase(),
                 this.duration.toMillis() / 50
         );
     }
