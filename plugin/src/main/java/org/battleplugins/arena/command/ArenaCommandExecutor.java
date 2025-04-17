@@ -113,8 +113,6 @@ public class ArenaCommandExecutor extends BaseCommandExecutor {
             players = Set.of(player);
         }
 
-        player.sendMessage("Hola 3");
-
         // If any player is already in an arena, deny them entry
         for (Player toJoin : players) {
             if (ArenaPlayer.getArenaPlayer(toJoin) != null) {
