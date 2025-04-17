@@ -111,7 +111,13 @@ public class ArenaEventManager {
      * @return the event after processing
      */
     public <T extends Event & ArenaEvent> T callEvent(T event) {
-        Bukkit.getPluginManager().callEvent(event);
+        if (event.isAsynchronous()) {
+            Bukkit.getPluginManager().callEvent(event);
+        } else {
+            Bukkit.getServer().getGlobalRegionScheduler().run(BattleArena.getInstance(), scheduledTask -> {
+                Bukkit.getPluginManager().callEvent(event);
+            });
+        }
         if (event.getEventTrigger() != null) {
             ArenaEventType<?> eventType = ArenaEventType.get(event.getEventTrigger().value());
             if (eventType == null) {

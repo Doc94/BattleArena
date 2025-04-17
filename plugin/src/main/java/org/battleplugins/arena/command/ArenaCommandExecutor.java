@@ -113,6 +113,8 @@ public class ArenaCommandExecutor extends BaseCommandExecutor {
             players = Set.of(player);
         }
 
+        player.sendMessage("Hola 3");
+
         // If any player is already in an arena, deny them entry
         for (Player toJoin : players) {
             if (ArenaPlayer.getArenaPlayer(toJoin) != null) {
@@ -180,7 +182,7 @@ public class ArenaCommandExecutor extends BaseCommandExecutor {
                             }
                         });
             }
-        }, Bukkit.getScheduler().getMainThreadExecutor(this.arena.getPlugin()));
+        });
     }
 
     @ArenaCommand(commands = "kick", description = "Kick a player from the arena.", permissionNode = "kick")
@@ -324,7 +326,7 @@ public class ArenaCommandExecutor extends BaseCommandExecutor {
     public void create(Player player) {
         ArenaEditorWizards.MAP_CREATION.openWizard(player, this.arena);
     }
-    
+
     @ArenaCommand(commands = { "remove", "delete" }, description = "Removes a map.", permissionNode = "remove")
     public void remove(Player player, CompetitionMap map) {
         if (!(map instanceof LiveCompetitionMap liveMap)) {

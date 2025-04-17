@@ -43,13 +43,13 @@ record ArenaLoader(BattleArena battleArena, String mode, Configuration configura
 
             ArenaCommandExecutor executor = arena.createCommandExecutor();
             ArenaCreateExecutorEvent event = new ArenaCreateExecutorEvent(arena, executor);
-            event.callEvent();
+            event.tryCallEvent();
 
             command.setExecutor(executor);
 
             CommandInjector.registerPermissions(arena.getName().toLowerCase(Locale.ROOT), executor);
 
-            new ArenaInitializeEvent(arena).callEvent();
+            new ArenaInitializeEvent(arena).tryCallEvent();
 
             this.battleArena.info("Loaded arena: {}.", arena.getName());
         } catch (ParseException e) {

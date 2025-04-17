@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Called when BattleArena is reloaded.
  */
-public class BattleArenaReloadEvent extends Event {
+public class BattleArenaReloadEvent extends GenericEvent {
     private final static HandlerList HANDLERS = new HandlerList();
 
     private final BattleArena battleArena;

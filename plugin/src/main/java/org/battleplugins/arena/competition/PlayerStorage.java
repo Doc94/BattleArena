@@ -194,7 +194,7 @@ public class PlayerStorage {
     }
 
     private void restoreGameMode() {
-        this.player.getPlayer().setGameMode(this.gameMode);
+        this.player.setGameMode(this.gameMode);
     }
 
     private void restoreAttributes() {
@@ -267,7 +267,7 @@ public class PlayerStorage {
         }
 
         if (all || toStore.contains(Type.GAMEMODE)) {
-            this.player.getPlayer().setGameMode(GameMode.SURVIVAL);
+            this.player.setGameMode(GameMode.SURVIVAL);
         }
 
         if (all || toStore.contains(Type.ATTRIBUTES)) {

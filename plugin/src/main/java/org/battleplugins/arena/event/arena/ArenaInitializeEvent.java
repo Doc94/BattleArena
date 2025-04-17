@@ -1,14 +1,14 @@
 package org.battleplugins.arena.event.arena;
 
 import org.battleplugins.arena.Arena;
-import org.bukkit.event.Event;
+import org.battleplugins.arena.event.GenericEvent;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Called when an {@link Arena} is initialized.
  */
-public class ArenaInitializeEvent extends Event {
+public class ArenaInitializeEvent extends GenericEvent {
     private final static HandlerList HANDLERS = new HandlerList();
 
     private final Arena arena;

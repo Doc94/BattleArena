@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Called when BattleArena is shutting down.
  */
-public class BattleArenaShutdownEvent extends Event {
+public class BattleArenaShutdownEvent extends GenericEvent {
     private final static HandlerList HANDLERS = new HandlerList();
 
     private final BattleArena battleArena;

@@ -15,6 +15,7 @@ import org.battleplugins.arena.stat.ArenaStat;
 import org.battleplugins.arena.stat.ArenaStats;
 import org.battleplugins.arena.stat.StatHolder;
 import org.battleplugins.arena.team.ArenaTeam;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.Nullable;
@@ -144,11 +145,11 @@ public class ArenaPlayer implements StatHolder, Resolvable {
      */
     public void setTeam(@Nullable ArenaTeam team) {
         if (this.team != null) {
-            new ArenaTeamLeaveEvent(this, this.team).callEvent();
+            new ArenaTeamLeaveEvent(this, this.team).tryCallEvent();
         }
 
         if (team != null) {
-            new ArenaTeamJoinEvent(this, team).callEvent();
+            new ArenaTeamJoinEvent(this, team).tryCallEvent();
         }
 
         this.team = team;
@@ -307,6 +308,14 @@ public class ArenaPlayer implements StatHolder, Resolvable {
         }
 
         return builder.build();
+    }
+
+    public void setGameMode(org.bukkit.GameMode gameMode) {
+        if (Bukkit.getServer().isPrimaryThread()) {
+            this.getPlayer().setGameMode(gameMode);
+        } else {
+            this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().setGameMode(gameMode), null);
+        }
     }
 
     @Override

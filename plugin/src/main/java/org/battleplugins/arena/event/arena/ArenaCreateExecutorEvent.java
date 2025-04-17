@@ -5,7 +5,7 @@ import org.battleplugins.arena.command.ArenaCommand;
 import org.battleplugins.arena.command.ArenaCommandExecutor;
 import org.battleplugins.arena.command.BaseCommandExecutor;
 import org.battleplugins.arena.command.SubCommandExecutor;
-import org.bukkit.event.Event;
+import org.battleplugins.arena.event.GenericEvent;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
 /**
  * Called when a {@link ArenaCommandExecutor} is constructed.
  */
-public class ArenaCreateExecutorEvent extends Event {
+public class ArenaCreateExecutorEvent extends GenericEvent {
     private final static HandlerList HANDLERS = new HandlerList();
 
     private final Arena arena;

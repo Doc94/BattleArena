@@ -29,7 +29,7 @@ class BattleArenaListener implements Listener {
         // listen for this event to register their behavior, we need to ensure
         // they are fully initialized so any references to said modules in
         // arena config files will be valid.
-        new BattleArenaPostInitializeEvent(this.plugin).callEvent();
+        new BattleArenaPostInitializeEvent(this.plugin).tryCallEvent();
 
         this.plugin.postInitialize();
     }

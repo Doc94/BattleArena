@@ -57,7 +57,7 @@ public class LiveCompetition<T extends Competition<T>> implements ArenaLike, Com
     private final CompetitionListener<T> competitionListener;
     private final OptionsListener<T> optionsListener;
     private final StatListener<T> statListener;
-    
+
     private final int maxPlayers;
 
     public LiveCompetition(Arena arena, CompetitionType type, LiveCompetitionMap map) {
@@ -325,7 +325,7 @@ public class LiveCompetition<T extends Competition<T>> implements ArenaLike, Com
     public final int getSpectatorCount() {
         return this.getSpectators().size();
     }
-    
+
     @Override
     public final int getMaxPlayers() {
         return this.maxPlayers;
@@ -443,7 +443,7 @@ public class LiveCompetition<T extends Competition<T>> implements ArenaLike, Com
         if (this.getPhaseManager().getCurrentPhase() instanceof LiveCompetitionPhase<?> phase) {
             phase.resolve().mergeInto(builder);
         }
-        
+
         return builder.build();
     }
 }

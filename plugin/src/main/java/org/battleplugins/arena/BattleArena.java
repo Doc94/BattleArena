@@ -105,7 +105,7 @@ public class BattleArena extends JavaPlugin implements LoggerHolder, BattleArena
             this.error("An error occurred loading modules!", e);
         }
 
-        new BattleArenaPreInitializeEvent(this).callEvent();
+        new BattleArenaPreInitializeEvent(this).tryCallEvent();
     }
 
     @Override
@@ -178,7 +178,7 @@ public class BattleArena extends JavaPlugin implements LoggerHolder, BattleArena
 
     @Override
     public void onDisable() {
-        new BattleArenaShutdownEvent(this).callEvent();
+        new BattleArenaShutdownEvent(this).tryCallEvent();
 
         this.disable();
     }
@@ -252,7 +252,7 @@ public class BattleArena extends JavaPlugin implements LoggerHolder, BattleArena
      * Reloads the plugin.
      */
     public void reload() {
-        new BattleArenaReloadEvent(this).callEvent();
+        new BattleArenaReloadEvent(this).tryCallEvent();
 
         this.disable();
 
@@ -270,7 +270,7 @@ public class BattleArena extends JavaPlugin implements LoggerHolder, BattleArena
 
         this.postInitialize();
 
-        new BattleArenaReloadedEvent(this).callEvent();
+        new BattleArenaReloadedEvent(this).tryCallEvent();
     }
 
     /**

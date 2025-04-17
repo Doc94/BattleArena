@@ -15,7 +15,7 @@ public class ArenaLeaveEvent extends BukkitArenaPlayerEvent {
     private final Cause cause;
 
     public ArenaLeaveEvent(ArenaPlayer player, Cause cause) {
-        super(player.getArena(), player);
+        super(player.getArena(), player, false);
 
         this.cause = cause;
     }

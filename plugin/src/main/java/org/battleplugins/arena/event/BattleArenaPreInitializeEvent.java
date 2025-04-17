@@ -1,14 +1,13 @@
 package org.battleplugins.arena.event;
 
 import org.battleplugins.arena.BattleArena;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Called when BattleArena is starting its initialization.
  */
-public class BattleArenaPreInitializeEvent extends Event {
+public class BattleArenaPreInitializeEvent extends GenericEvent {
     private final static HandlerList HANDLERS = new HandlerList();
 
     private final BattleArena battleArena;

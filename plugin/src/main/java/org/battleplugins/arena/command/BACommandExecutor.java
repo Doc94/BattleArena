@@ -66,7 +66,7 @@ public class BACommandExecutor extends BaseCommandExecutor {
                     sender.sendMessage(message);
                 }
             }
-        }, Bukkit.getScheduler().getMainThreadExecutor(BattleArena.getInstance()));
+        });
     }
 
     @ArenaCommand(commands = "restore", description = "Restores a backup for a player.", permissionNode = "restore")

@@ -119,7 +119,7 @@ public class CompetitionManager {
 
             // No open competitions found or unable to create a new one
             return invalidResult;
-        }, Bukkit.getScheduler().getMainThreadExecutor(this.plugin));
+        });
     }
 
     public CompletableFuture<CompetitionResult> findJoinableCompetition(List<Competition<?>> competitions, Player player, PlayerRole role) {
