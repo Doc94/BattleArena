@@ -43,7 +43,7 @@ public class CountdownPhase<T extends LiveCompetition<T>> extends LiveCompetitio
 
             this.onCountdown();
             this.countdown--;
-        }, 0L, 20L);
+        }, 1L, 20L);
     }
 
     @ArenaEventHandler
