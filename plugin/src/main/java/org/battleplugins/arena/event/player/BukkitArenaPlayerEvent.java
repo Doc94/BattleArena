@@ -1,8 +1,8 @@
 package org.battleplugins.arena.event.player;
 
+import java.util.concurrent.CompletableFuture;
 import org.battleplugins.arena.Arena;
 import org.battleplugins.arena.ArenaPlayer;
-import org.battleplugins.arena.BattleArena;
 import org.bukkit.Bukkit;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
@@ -33,8 +33,8 @@ public abstract class BukkitArenaPlayerEvent extends PlayerEvent implements Aren
     }
 
     public void tryCallEvent() {
-        if (this.isAsynchronous() && Bukkit.getServer().isPrimaryThread()) {
-            this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> super.callEvent(), null);
+        if (this.isAsynchronous() && Bukkit.isPrimaryThread()) {
+            CompletableFuture<Boolean> ret = CompletableFuture.supplyAsync(super::callEvent);
             return;
         }
         super.callEvent();
