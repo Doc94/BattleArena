@@ -230,11 +230,11 @@ public class PlayerStorage {
     private void restoreEffects() {
         // Clear all effects from the arena
         for (PotionEffect effect : this.player.getPlayer().getActivePotionEffects()) {
-            this.player.getPlayer().removePotionEffect(effect.getType());
+            this.player.removePotionEffect(effect.getType());
         }
 
         for (PotionEffect effect : this.effects) {
-            this.player.getPlayer().addPotionEffect(effect);
+            this.player.addPotionEffect(effect);
         }
     }
 
@@ -298,7 +298,7 @@ public class PlayerStorage {
 
         if (all || toStore.contains(Type.EFFECTS)) {
             for (PotionEffect effect : this.effects) {
-                this.player.getPlayer().removePotionEffect(effect.getType());
+                this.player.removePotionEffect(effect.getType());
             }
         }
     }

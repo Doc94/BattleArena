@@ -43,7 +43,7 @@ public class GiveEffectsAction extends EventAction {
 
             try {
                 PotionEffect effect = PotionEffectParser.deserializeSingular(effectContents);
-                arenaPlayer.getPlayer().addPotionEffect(effect);
+                arenaPlayer.addPotionEffect(effect);
             } catch (ParseException e) {
                 ParseException.handle(e
                         .context("Action", "GiveEffectsAction")

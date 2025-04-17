@@ -318,6 +318,22 @@ public class ArenaPlayer implements StatHolder, Resolvable {
         }
     }
 
+    public void removePotionEffect(org.bukkit.potion.PotionEffectType effectType) {
+        if (Bukkit.getServer().isPrimaryThread()) {
+            this.getPlayer().removePotionEffect(effectType);
+        } else {
+            this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().removePotionEffect(effectType), null);
+        }
+    }
+
+    public void addPotionEffect(org.bukkit.potion.PotionEffect effect) {
+        if (Bukkit.getServer().isPrimaryThread()) {
+            this.getPlayer().addPotionEffect(effect);
+        } else {
+            this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().addPotionEffect(effect), null);
+        }
+    }
+
     @Override
     public String toString() {
         return "ArenaPlayer{" +

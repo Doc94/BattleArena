@@ -17,7 +17,7 @@ public class ClearEffectsAction extends EventAction {
     @Override
     public void call(ArenaPlayer arenaPlayer, Resolvable resolvable) {
         for (PotionEffect effect : List.copyOf(arenaPlayer.getPlayer().getActivePotionEffects())) {
-            arenaPlayer.getPlayer().removePotionEffect(effect.getType());
+            arenaPlayer.removePotionEffect(effect.getType());
         }
     }
 }
