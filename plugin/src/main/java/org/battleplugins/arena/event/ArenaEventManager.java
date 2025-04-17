@@ -1,5 +1,6 @@
 package org.battleplugins.arena.event;
 
+import java.util.concurrent.CompletableFuture;
 import org.apache.commons.lang3.tuple.Pair;
 import org.battleplugins.arena.Arena;
 import org.battleplugins.arena.ArenaPlayer;
@@ -111,12 +112,10 @@ public class ArenaEventManager {
      * @return the event after processing
      */
     public <T extends Event & ArenaEvent> T callEvent(T event) {
-        if (event.isAsynchronous()) {
-            Bukkit.getPluginManager().callEvent(event);
+        if (event.isAsynchronous() && Bukkit.isPrimaryThread()) {
+            CompletableFuture<Boolean> ret = CompletableFuture.supplyAsync(event::callEvent);
         } else {
-            Bukkit.getServer().getGlobalRegionScheduler().run(BattleArena.getInstance(), scheduledTask -> {
-                Bukkit.getPluginManager().callEvent(event);
-            });
+            event.callEvent();
         }
         if (event.getEventTrigger() != null) {
             ArenaEventType<?> eventType = ArenaEventType.get(event.getEventTrigger().value());
