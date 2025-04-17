@@ -115,7 +115,11 @@ public class ArenaEventManager {
         if (event.isAsynchronous() && Bukkit.isPrimaryThread()) {
             CompletableFuture<Boolean> ret = CompletableFuture.supplyAsync(event::callEvent);
         } else {
-            event.callEvent();
+            if (!Bukkit.isPrimaryThread()) {
+                Bukkit.getGlobalRegionScheduler().run(BattleArena.getInstance(), scheduledTask -> event.callEvent());
+            } else {
+                event.callEvent();
+            }
         }
         if (event.getEventTrigger() != null) {
             ArenaEventType<?> eventType = ArenaEventType.get(event.getEventTrigger().value());
