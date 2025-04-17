@@ -35,7 +35,7 @@ public class CountdownPhase<T extends LiveCompetition<T>> extends LiveCompetitio
     @Override
     public void onStart() {
         this.countdown = this.countdownTime.toSeconds();
-        Bukkit.getServer().getGlobalRegionScheduler().runAtFixedRate(this.competition.getArena().getPlugin(), scheduledTask -> {
+        countdownTask = Bukkit.getServer().getGlobalRegionScheduler().runAtFixedRate(this.competition.getArena().getPlugin(), scheduledTask -> {
             if (this.countdown == 0) {
                 this.advanceToNextPhase();
                 return;
