@@ -796,4 +796,13 @@ public class BattleArena extends JavaPlugin implements LoggerHolder, BattleArena
     public static BattleArena getInstance() {
         return instance;
     }
+
+    public static boolean isFolia() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 }

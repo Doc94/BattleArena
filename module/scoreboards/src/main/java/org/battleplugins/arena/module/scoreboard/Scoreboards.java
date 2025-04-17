@@ -40,6 +40,14 @@ public class Scoreboards implements ArenaModuleInitializer, ArenaListener {
 
     @EventHandler
     public void onPostInitialize(BattleArenaPostInitializeEvent event) {
+        // Check if running with Folia
+        if (BattleArena.isFolia()) {
+            event.getBattleArena().module(Scoreboards.ID).ifPresent(container ->
+                    container.disable("Folia dont support Scoreboard Module to work!")
+            );
+
+            return;
+        }
         this.onLoad(event.getBattleArena(), true);
     }
 
