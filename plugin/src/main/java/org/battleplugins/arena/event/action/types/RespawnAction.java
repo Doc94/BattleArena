@@ -16,8 +16,14 @@ public class RespawnAction extends EventAction {
 
     @Override
     public void call(ArenaPlayer arenaPlayer, Resolvable resolvable) {
-        Bukkit.getServer().getGlobalRegionScheduler().runDelayed(BattleArena.getInstance(), scheduledTask -> {
-            arenaPlayer.getPlayer().spigot().respawn();
-        }, 1L);
+        arenaPlayer.getPlayer().getScheduler().runDelayed(BattleArena.getInstance(), scheduledTask -> {
+            if (!Bukkit.isPrimaryThread()) {
+                arenaPlayer.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask1 -> {
+                    arenaPlayer.getPlayer().spigot().respawn();
+                }, null);
+            } else {
+                arenaPlayer.getPlayer().spigot().respawn();
+            }
+        }, null, 1L);
     }
 }
