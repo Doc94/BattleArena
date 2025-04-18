@@ -15,7 +15,6 @@ import org.battleplugins.arena.stat.ArenaStat;
 import org.battleplugins.arena.stat.ArenaStats;
 import org.battleplugins.arena.stat.StatHolder;
 import org.battleplugins.arena.team.ArenaTeam;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.jetbrains.annotations.Nullable;
@@ -311,27 +310,15 @@ public class ArenaPlayer implements StatHolder, Resolvable {
     }
 
     public void setGameMode(org.bukkit.GameMode gameMode) {
-        if (Bukkit.getServer().isPrimaryThread()) {
-            this.getPlayer().setGameMode(gameMode);
-        } else {
-            this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().setGameMode(gameMode), null);
-        }
+        this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().setGameMode(gameMode), null);
     }
 
     public void removePotionEffect(org.bukkit.potion.PotionEffectType effectType) {
-        if (Bukkit.getServer().isPrimaryThread()) {
-            this.getPlayer().removePotionEffect(effectType);
-        } else {
-            this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().removePotionEffect(effectType), null);
-        }
+        this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().removePotionEffect(effectType), null);
     }
 
     public void addPotionEffect(org.bukkit.potion.PotionEffect effect) {
-        if (Bukkit.getServer().isPrimaryThread()) {
-            this.getPlayer().addPotionEffect(effect);
-        } else {
-            this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().addPotionEffect(effect), null);
-        }
+        this.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> this.getPlayer().addPotionEffect(effect), null);
     }
 
     @Override
