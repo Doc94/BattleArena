@@ -19,7 +19,7 @@ public abstract class BukkitArenaPlayerEvent extends PlayerEvent implements Aren
     }
 
     public BukkitArenaPlayerEvent(@NotNull Arena arena, @NotNull ArenaPlayer player) {
-        this(arena, player, true);
+        this(arena, player, !Bukkit.isPrimaryThread());
     }
 
     @Override
