@@ -188,7 +188,7 @@ public class ArenaEventManager {
                 event.resolve().mergeInto(resolver);
 
                 try {
-                    action.call(player, resolver.build());
+                    player.getPlayer().getScheduler().run(BattleArena.getInstance(), scheduledTask -> action.call(player, resolver.build()), null);
                 } catch (Throwable e) {
                     this.arena.getPlugin().warn("An error occurred calling event action {}", action, e);
                     return;
@@ -196,7 +196,7 @@ public class ArenaEventManager {
             }
 
             try {
-                action.postProcess(this.arena, competition, event);
+                Bukkit.getGlobalRegionScheduler().run(BattleArena.getInstance(), scheduledTask -> action.postProcess(this.arena, competition, event));
             } catch (Throwable e) {
                 this.arena.getPlugin().warn("An error occurred post-processing event action {}", action, e);
                 return;
