@@ -196,7 +196,12 @@ public class ArenaEventManager {
             }
 
             try {
-                Bukkit.getGlobalRegionScheduler().run(BattleArena.getInstance(), scheduledTask -> action.postProcess(this.arena, competition, event));
+                if (BattleArena.getInstance().isEnabled()) {
+                    Bukkit.getGlobalRegionScheduler().run(BattleArena.getInstance(), scheduledTask -> action.postProcess(this.arena, competition, event));
+                } else {
+                    this.arena.getPlugin().warn("A post-processing event action {} need to be load and the plugin is not enabled, try to pass...", action);
+                    action.postProcess(this.arena, competition, event);
+                }
             } catch (Throwable e) {
                 this.arena.getPlugin().warn("An error occurred post-processing event action {}", action, e);
                 return;
