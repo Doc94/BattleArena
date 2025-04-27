@@ -1,5 +1,6 @@
 package org.battleplugins.arena.editor.stage;
 
+import java.util.function.BiFunction;
 import org.battleplugins.arena.editor.EditorContext;
 import org.battleplugins.arena.messages.Message;
 import org.battleplugins.arena.messages.Messages;
@@ -24,14 +25,14 @@ public class EnumTextInputStage<E extends EditorContext<E>> extends TextInputSta
                     }
 
                     return false;
-                    }, ctx -> str -> {
-                        T[] constants = enumClass.getEnumConstants();
-                        for (T constant : constants) {
-                            if (constant.name().equalsIgnoreCase(str)) {
-                                inputConsumer.apply(ctx).accept(constant);
-                                return;
-                            }
+                }, ctx -> str -> {
+                    T[] constants = enumClass.getEnumConstants();
+                    for (T constant : constants) {
+                        if (constant.name().equalsIgnoreCase(str)) {
+                            inputConsumer.apply(ctx).accept(constant);
+                            return;
                         }
+                    }
                 }
         );
     }

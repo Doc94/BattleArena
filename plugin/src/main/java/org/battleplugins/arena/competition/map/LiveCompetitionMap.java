@@ -3,7 +3,7 @@ package org.battleplugins.arena.competition.map;
 import net.kyori.adventure.util.TriState;
 import org.battleplugins.arena.Arena;
 import org.battleplugins.arena.ArenaLike;
-import org.battleplugins.arena.competition.Competition;
+import org.battleplugins.arena.BattleArena;
 import org.battleplugins.arena.competition.LiveCompetition;
 import org.battleplugins.arena.competition.map.options.Bounds;
 import org.battleplugins.arena.competition.map.options.Spawns;
@@ -241,6 +241,9 @@ public class LiveCompetitionMap implements ArenaLike, CompetitionMap, PostProces
     public final LiveCompetition<?> createDynamicCompetition(Arena arena) {
         if (this.type != MapType.DYNAMIC) {
             throw new IllegalStateException("Cannot create dynamic competition for non-dynamic map!");
+        }
+        if (BattleArena.isFolia()) {
+            throw new UnsupportedOperationException("Cannot create dynamic competition in Folia!");
         }
 
         String worldName = "ba-dynamic-" + UUID.randomUUID();

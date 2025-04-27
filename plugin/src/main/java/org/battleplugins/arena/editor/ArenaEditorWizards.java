@@ -11,7 +11,7 @@ import org.battleplugins.arena.competition.map.options.Spawns;
 import org.battleplugins.arena.competition.map.options.TeamSpawns;
 import org.battleplugins.arena.config.ParseException;
 import org.battleplugins.arena.editor.context.MapCreateContext;
-import org.battleplugins.arena.editor.stage.EnumTextInputStage;
+import org.battleplugins.arena.editor.stage.MapTypeTextInputStage;
 import org.battleplugins.arena.editor.stage.PositionInputStage;
 import org.battleplugins.arena.editor.stage.SpawnInputStage;
 import org.battleplugins.arena.editor.stage.TeamSpawnInputStage;
@@ -38,9 +38,8 @@ public final class ArenaEditorWizards {
                     ctx -> ctx::setMapName
                     )
             )
-            .addStage(MapOption.TYPE, new EnumTextInputStage<>(
+            .addStage(MapOption.TYPE, new MapTypeTextInputStage<>(
                     Messages.MAP_SET_TYPE,
-                    MapType.class,
                     ctx -> ctx::setMapType
             ))
             .addStage(MapOption.MIN_POS, new PositionInputStage<>(Messages.MAP_SET_MIN_POSITION, ctx -> ctx::setMin))
